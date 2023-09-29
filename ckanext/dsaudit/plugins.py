@@ -1,14 +1,17 @@
 import ckan.plugins as p
 
+from ckanext.dsaudit import blueprint
 from ckanext.dsaudit.actions import (
     datastore_create, datastore_upsert, datastore_delete
 )
+from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 
 class DSAuditPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IConfigurer)
     p.implements(p.IBlueprint)
     p.implements(p.IActions)
     p.implements(p.ITemplateHelpers, inherit=True)
+    p.implements(p.ITranslation)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
