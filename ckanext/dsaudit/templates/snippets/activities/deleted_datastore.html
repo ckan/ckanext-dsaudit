@@ -1,0 +1,40 @@
+{% macro resource(act) %}
+  <a href="{{ h.dsaudit_resource_url(act.object_id) }}">{{ act.object_id }}</a>
+{% endmacro %}
+
+<li class="item {{ activity.activity_type|replace(' ', '-')|lower }}">
+  <span class="fa-stack fa-lg">
+    <i class="fa fa-circle fa-stack-2x icon"></i>
+    <i class="fa fa-icon fa-stack-1x fa-inverse"></i>
+  </span>
+  {% if 'filters' in activity.data %}
+    {{ _('{actor} deleted records from the datastore resource {resource}').format(
+      actor=ah.actor(activity),
+      resource=resource(activity),
+    )|safe }}
+
+    {% set cols = activity.data.filters.keys() %}
+    <div style="margin: 5px 0 0 80px;">
+    <table class="table">
+      <thead>
+        {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
+      </thead>
+      <tbody>
+        <tr>
+          {% for c in cols %}<td>{{ activity.data.filters.get(c, '') }}</td>{% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  {% else %}
+    {{ _('{actor} deleted the datastore resource {resource}').format(
+      actor=ah.actor(activity),
+      resource=resource(activity),
+    )|safe }}
+    <br/>
+  {% endif %}
+
+  <span class="date" title="{{ h.render_datetime(activity.timestamp, with_hours=True) }}">
+    {{ h.time_ago_from_timestamp(activity.timestamp) }}
+  </span>
+</li>
