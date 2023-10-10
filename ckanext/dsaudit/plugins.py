@@ -1,6 +1,6 @@
 import ckan.plugins as p
 
-from ckanext.dsaudit import blueprint
+from ckanext.dsaudit import blueprint, helpers
 from ckanext.dsaudit.actions import (
     datastore_create, datastore_upsert, datastore_delete
 )
@@ -24,4 +24,10 @@ class DSAuditPlugin(p.SingletonPlugin, DefaultTranslation):
             'datastore_create': datastore_create,
             'datastore_upsert': datastore_upsert,
             'datastore_delete': datastore_delete,
+        }
+
+    def get_helpers(self):
+        return {
+            'dsaudit_resource_url': helpers.dsaudit_resource_url,
+            'dsaudit_data_columns': helpers.dsaudit_data_columns,
         }
