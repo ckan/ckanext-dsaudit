@@ -9,19 +9,14 @@
   </span>
   {% if 'filters' in activity.data %}
     {% if 'total' in activity.data %}
-      {{ ngettext(
+      {% set msg=ngettext(
         '{actor} deleted %(num)d record from the datastore resource {resource}',
         '{actor} deleted %(num)d records from the datastore resource {resource}',
-        activity.data.total).format(
-        actor=ah.actor(activity),
-        resource=resource(activity),
-      )|safe }}
+        activity.data.total) %}
     {% else %}
-      {{ _('{actor} deleted records from the datastore resource {resource}').format(
-        actor=ah.actor(activity),
-        resource=resource(activity),
-      )|safe }}
+      {% set msg=_('{actor} deleted records from the datastore resource {resource}') %}
     {% endif %}
+    {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
 
     {% if 'records' in activity.data %}
       {% set cols = h.dsaudit_data_columns(activity.data.records) %}

@@ -8,16 +8,11 @@
     <i class="fa fa-icon fa-stack-1x fa-inverse"></i>
   </span>
   {% if activity.data.get('existing') %}
-    {{ _('{actor} redefined the datastore table for resource {resource}').format(
-      actor=ah.actor(activity),
-      resource=resource(activity),
-    )|safe }}
+    {% set msg=_('{actor} redefined the datastore table for resource {resource}') %}
   {% else %}
-    {{ _('{actor} defined the datastore table for resource {resource}').format(
-      actor=ah.actor(activity),
-      resource=resource(activity),
-    )|safe }}
+    {% set msg=_('{actor} defined the datastore table for resource {resource}') %}
   {% endif %}
+  {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
 
   <div style="margin: 5px 0 0 80px;">
     <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">

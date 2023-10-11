@@ -8,30 +8,22 @@
     <i class="fa fa-icon fa-stack-1x fa-inverse"></i>
   </span>
   {% if activity.data.method == 'insert' %}
-    {{ ngettext(
+    {% set msg=ngettext(
       '{actor} inserted %(num)d record into the datastore resource {resource}',
       '{actor} inserted %(num)d records into the datastore resource {resource}',
-      activity.data.records|count).format(
-      actor=ah.actor(activity),
-      resource=resource(activity),
-    )|safe }}
+      activity.data.records|count) %}
   {% elif activity.data.method == 'update' %}
-    {{ ngettext(
+    {% set msg=ngettext(
       '{actor} updated %(num)d record in the datastore resource {resource}',
       '{actor} updated %(num)d records in the datastore resource {resource}',
-      activity.data.records|count).format(
-      actor=ah.actor(activity),
-      resource=resource(activity),
-    )|safe }}
+      activity.data.records|count) %}
   {% else %}
-    {{ ngettext(
+    {% set msg=ngettext(
       '{actor} upserted %(num)d record into the datastore resource {resource}',
       '{actor} upserted %(num)d records into the datastore resource {resource}',
-      activity.data.records|count).format(
-      actor=ah.actor(activity),
-      resource=resource(activity),
-    )|safe }}
+      activity.data.records|count) %}
   {% endif %}
+  {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
 
   {% set cols = h.dsaudit_data_columns(activity.data.records) %}
   <div style="margin: 5px 0 0 80px;">
