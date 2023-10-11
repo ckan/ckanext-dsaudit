@@ -17,8 +17,8 @@
     )|safe }}
   {% elif activity.data.method == 'update' %}
     {{ ngettext(
-      '{actor} updated %(num)d record into the datastore resource {resource}',
-      '{actor} updated %(num)d records into the datastore resource {resource}',
+      '{actor} updated %(num)d record in the datastore resource {resource}',
+      '{actor} updated %(num)d records in the datastore resource {resource}',
       activity.data.records|count).format(
       actor=ah.actor(activity),
       resource=resource(activity),

@@ -20,6 +20,7 @@ def datastore_create(original_action, context, data_dict):
     create_data = {
         k: v for k, v in rval.items() if k not in ['records', 'method']
     }
+    create_data['existing'] = res.extras.get('datastore_active', False)
     get_action('activity_create')(acontext, {
         'user_id': context['model'].User.get(context['user']).id,
         'object_id': rval['resource_id'],
