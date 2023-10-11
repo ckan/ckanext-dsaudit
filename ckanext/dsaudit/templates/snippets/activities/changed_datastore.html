@@ -8,17 +8,26 @@
     <i class="fa fa-icon fa-stack-1x fa-inverse"></i>
   </span>
   {% if activity.data.method == 'insert' %}
-    {{ _('{actor} inserted records into the datastore resource {resource}').format(
+    {{ ngettext(
+      '{actor} inserted %(num)d record into the datastore resource {resource}',
+      '{actor} inserted %(num)d records into the datastore resource {resource}',
+      activity.data.records|count).format(
       actor=ah.actor(activity),
       resource=resource(activity),
     )|safe }}
   {% elif activity.data.method == 'update' %}
-    {{ _('{actor} updated records in the datastore resource {resource}').format(
+    {{ ngettext(
+      '{actor} updated %(num)d record into the datastore resource {resource}',
+      '{actor} updated %(num)d records into the datastore resource {resource}',
+      activity.data.records|count).format(
       actor=ah.actor(activity),
       resource=resource(activity),
     )|safe }}
   {% else %}
-    {{ _('{actor} upserted records into the datastore resource {resource}').format(
+    {{ ngettext(
+      '{actor} upserted %(num)d record into the datastore resource {resource}',
+      '{actor} upserted %(num)d records into the datastore resource {resource}',
+      activity.data.records|count).format(
       actor=ah.actor(activity),
       resource=resource(activity),
     )|safe }}
@@ -26,18 +35,18 @@
 
   {% set cols = h.dsaudit_data_columns(activity.data.records) %}
   <div style="margin: 5px 0 0 80px;">
-  <table class="table">
-    <thead>
-      {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
-    </thead>
-    <tbody>
-      {% for r in activity.data.records %}
-        <tr>
-          {% for c in cols %}<td>{{ r.get(c, '') }}</td>{% endfor %}
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <table class="table">
+      <thead>
+        {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
+      </thead>
+      <tbody>
+        {% for r in activity.data.records %}
+          <tr>
+            {% for c in cols %}<td>{{ r.get(c, '') }}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <span class="date" title="{{ h.render_datetime(activity.timestamp, with_hours=True) }}">
     {{ h.time_ago_from_timestamp(activity.timestamp) }}

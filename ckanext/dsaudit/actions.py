@@ -60,17 +60,34 @@ def datastore_upsert(original_action, context, data_dict):
 
 @chained_action
 def datastore_delete(original_action, context, data_dict):
+    activity_data = {}
+    if 'filters' in data_dict:
+        scontext = dict(
+            fresh_context(context),
+            ignore_auth=True,
+        )
+        srval = get_action('datastore_search')(scontext, {
+            'resource_id': data_dict['resource_id'],
+            'filters': data_dict['filters'],
+        })
+        activity_data = {
+            'records': srval['records'],
+            'total': srval['total'],
+        }
+
     rval = original_action(context, data_dict)
+
     acontext = dict(
         fresh_context(context),
         ignore_auth=True,
         schema=dsaudit_create_activity_schema(),
     )
+    activity_data['filters'] = rval['filters']
     get_action('activity_create')(acontext, {
         'user_id': context['model'].User.get(context['user']).id,
         'object_id': rval['resource_id'],
         'activity_type': 'deleted datastore',
-        'data': rval,
+        'data': activity_data,
     })
     return rval
 

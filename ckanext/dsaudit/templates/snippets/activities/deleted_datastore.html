@@ -8,24 +8,53 @@
     <i class="fa fa-icon fa-stack-1x fa-inverse"></i>
   </span>
   {% if 'filters' in activity.data %}
-    {{ _('{actor} deleted records from the datastore resource {resource}').format(
-      actor=ah.actor(activity),
-      resource=resource(activity),
-    )|safe }}
+    {% if 'total' in activity.data %}
+      {{ ngettext(
+        '{actor} deleted %(num)d record from the datastore resource {resource}',
+        '{actor} deleted %(num)d records from the datastore resource {resource}',
+        activity.data.total).format(
+        actor=ah.actor(activity),
+        resource=resource(activity),
+      )|safe }}
+    {% else %}
+      {{ _('{actor} deleted records from the datastore resource {resource}').format(
+        actor=ah.actor(activity),
+        resource=resource(activity),
+      )|safe }}
+    {% endif %}
 
-    {% set cols = activity.data.filters.keys() %}
-    <div style="margin: 5px 0 0 80px;">
-    <table class="table">
-      <thead>
-        {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
-      </thead>
-      <tbody>
-        <tr>
-          {% for c in cols %}<td>{{ activity.data.filters.get(c, '') }}</td>{% endfor %}
-        </tr>
-      </tbody>
-    </table>
-    </div>
+    {% if 'records' in activity.data %}
+      {% set cols = h.dsaudit_data_columns(activity.data.records) %}
+      <div style="margin: 5px 0 0 80px;">
+        <table class="table">
+          <thead>
+            {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
+          </thead>
+          <tbody>
+            {% for r in activity.data.records %}
+              <tr>
+                {% for c in cols %}<td>{{ r.get(c, '') }}</td>{% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      {% set cols = activity.data.filters.keys() %}
+      <div style="margin: 5px 0 0 80px;">
+        <table class="table">
+          <thead>
+            {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
+          </thead>
+          <tbody>
+            <tr>
+              {% for c in cols %}<td>{{ activity.data.filters.get(c, '') }}</td>{% endfor %}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
   {% else %}
     {{ _('{actor} deleted the datastore resource {resource}').format(
       actor=ah.actor(activity),
