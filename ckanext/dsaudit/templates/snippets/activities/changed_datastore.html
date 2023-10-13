@@ -27,16 +27,23 @@
 
   {% set cols = h.dsaudit_data_columns(activity.data.records) %}
   <div style="margin: 5px 0 0 80px;">
-    <table class="table">
+    <table class="table table-sm table-responsive">
       <thead>
         {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
       </thead>
       <tbody>
-        {% for r in activity.data.records %}
+        {% for r in activity.data.records[:h.dsaudit_preview_records()] %}
           <tr>
             {% for c in cols %}<td>{{ r.get(c, '') }}</td>{% endfor %}
           </tr>
         {% endfor %}
+        {% if activity.data.records|count > h.dsaudit_preview_records() %}
+          <tr>
+            <td colspan="{{ cols|count }}">
+              ...
+            </td>
+          </tr>
+        {% endif %}
       </tbody>
     </table>
   </div>

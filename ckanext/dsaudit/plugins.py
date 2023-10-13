@@ -34,4 +34,5 @@ class DSAuditPlugin(p.SingletonPlugin, DefaultTranslation):
         return {
             'dsaudit_resource_url': helpers.dsaudit_resource_url,
             'dsaudit_data_columns': helpers.dsaudit_data_columns,
+            'dsaudit_preview_records': helpers.dsaudit_preview_records,
         }
