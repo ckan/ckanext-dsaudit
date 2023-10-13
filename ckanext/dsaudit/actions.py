@@ -9,10 +9,14 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
 )
 
-from ckanext.activity.logic.schema import default_create_activity_schema
+from ckanext.activity.logic.schema import (
+    default_create_activity_schema,
+    default_activity_list_schema,
+)
 from ckanext.activity.model import activity as model_activity
+from ckan.logic import validate
 
-
+@validate(default_activity_list_schema)
 def resource_activity_list(context, data_dict):
     include_hidden_activity = data_dict.get("include_hidden_activity", False)
     activity_types = data_dict.pop("activity_types", None)

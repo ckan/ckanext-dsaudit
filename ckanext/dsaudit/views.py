@@ -52,14 +52,16 @@ def resource_activity(id, resource_id):
         has_more,
         activity_stream,
         id=id,
-        activity_type=activity_type
+        activity_type=activity_type,
+        resource_id=resource_id,
         )
 
     newer_activities_url = _get_newer_activities_url(
         has_more,
         activity_stream,
         id=id,
-        activity_type=activity_type
+        activity_type=activity_type,
+        resource_id=resource_id,
     )
 
     try:
