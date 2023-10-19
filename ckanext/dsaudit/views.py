@@ -3,12 +3,6 @@ from flask.views import MethodView
 
 from ckan.plugins import toolkit as tk
 
-from ckanext.activity.views import (
-    _get_activity_stream_limit,
-    _get_older_activities_url,
-    _get_newer_activities_url,
-)
-
 dsaudit = Blueprint('dsaudit', __name__)
 
 @dsaudit.route('/dataset/<id>/resource/<resource_id>/ds-activity')
@@ -87,3 +81,57 @@ def resource_activity(id, resource_id):
             "resource": resource,
         },
     )
+
+
+def _get_activity_stream_limit():
+    base_limit = tk.config.get("ckan.activity_list_limit", 31)
+    max_limit = tk.config.get("ckan.activity_list_limit_max", 100)
+    return min(base_limit, max_limit)
+
+
+def _get_older_activities_url(has_more, stream, **kwargs):
+    """ Returns pagination's older activities url.
+
+    If "after", we came from older activities, so we know it exists.
+    if "before" (or is_first_page), we only show older activities if we know
+    we have more rows
+    """
+    after = tk.request.args.get("after")
+    before = tk.request.args.get("before")
+    is_first_page = after is None and before is None
+    url = None
+    if after or (has_more and (before or is_first_page)):
+        before_time = datetime.fromisoformat(
+            stream[-1]["timestamp"]
+        )
+        url = tk.h.url_for(
+            tk.request.endpoint,
+            before=before_time.timestamp(),
+            **kwargs
+        )
+
+    return url
+
+
+def _get_newer_activities_url(has_more, stream, **kwargs):
+    """ Returns pagination's newer activities url.
+
+    if "before", we came from the newer activities, so it exists.
+    if "after", we only show newer activities if we know
+    we have more rows
+    """
+    after = tk.request.args.get("after")
+    before = tk.request.args.get("before")
+    url = None
+
+    if before or (has_more and after):
+        after_time = datetime.fromisoformat(
+            stream[0]["timestamp"]
+        )
+        url = tk.h.url_for(
+            tk.request.endpoint,
+            after=after_time.timestamp(),
+            **kwargs
+        )
+    return url
+

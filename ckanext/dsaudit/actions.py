@@ -1,6 +1,5 @@
 from ckan.plugins.toolkit import (
     chained_action,
-    fresh_context,
     get_action,
     get_validator,
     h,
@@ -9,12 +8,34 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
 )
 
-from ckanext.activity.logic.schema import (
-    default_create_activity_schema,
-    default_activity_list_schema,
-)
-from ckanext.activity.model import activity as model_activity
 from ckan.logic import validate
+
+try:
+    from ckan.plugins.toolkit import fresh_context
+except ImportError:
+    def fresh_context(context):
+        return {
+            k: context[k] for k in (
+                'model', 'session', 'user', 'auth_user_obj',
+                'ignore_auth', 'defer_commit',
+            ) if k in context
+        }
+
+try:
+    from ckanext.activity.logic.schema import (
+        default_create_activity_schema,
+        default_activity_list_schema,
+    )
+    from ckanext.activity.model import activity as model_activity
+    from ckanext.activity.model.activity import activity_list_dictize
+except ImportError:
+    from ckan.logic.schema import (
+        default_create_activity_schema,
+        default_activity_list_schema,
+    )
+    from ckan.model import activity as model_activity
+    from ckan.lib.dictization.model_dictize import activity_list_dictize
+
 
 @validate(default_activity_list_schema)
 def resource_activity_list(context, data_dict):
@@ -42,7 +63,7 @@ def resource_activity_list(context, data_dict):
     after = data_dict.get("after")
     before = data_dict.get("before")
 
-    activity_objects = model_activity.package_activity_list(
+    activity_objects = _resource_activity_list(
         resource_id,
         limit=limit,
         offset=offset,
@@ -53,7 +74,7 @@ def resource_activity_list(context, data_dict):
         exclude_activity_types=exclude_activity_types,
     )
 
-    return model_activity.activity_list_dictize(activity_objects, context)
+    return activity_list_dictize(activity_objects, context)
 
 
 
@@ -163,3 +184,52 @@ def dsaudit_create_activity_schema():
     del sch['object_id'][-1]
     del sch['activity_type'][-1]
     return sch
+
+
+def _resource_activity_list(
+    resource_id,
+    limit,
+    offset=None,
+    after=None,
+    before=None,
+    include_hidden_activity=False,
+    activity_types=None,
+    exclude_activity_types=None,
+):
+    q = model_activity._package_activity_query(resource_id)
+
+    if not include_hidden_activity:
+        q = model_activity._filter_activitites_from_users(q)
+
+    if activity_types:
+        q = model_activity._filter_activitites_from_type(
+            q, include=True, types=activity_types
+        )
+    elif exclude_activity_types:
+        q = model_activity._filter_activitites_from_type(
+            q, include=False, types=exclude_activity_types
+        )
+
+    if after:
+        q = q.filter(model_activity.Activity.timestamp > after)
+    if before:
+        q = q.filter(model_activity.Activity.timestamp < before)
+
+    # reverse sort queries for "only before" queries
+    revese_order = after and not before
+    if revese_order:
+        q = q.order_by(model_activity.Activity.timestamp)
+    else:
+        q = q.order_by(model_activity.Activity.timestamp.desc())
+
+    if offset:
+        q = q.offset(offset)
+    if limit:
+        q = q.limit(limit)
+
+    results = q.all()
+
+    if revese_order:
+        results.reverse()
+
+    return results

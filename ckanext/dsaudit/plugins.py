@@ -12,6 +12,8 @@ class DSAuditPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation)
 
     def update_config(self, config):
+        if not p.toolkit.check_ckan_version('2.10'):
+            p.toolkit.add_template_directory(config, '2.9_templates')
         p.toolkit.add_template_directory(config, 'templates')
 
     def get_blueprint(self):
