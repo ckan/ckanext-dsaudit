@@ -34,7 +34,11 @@ except ImportError:
         default_activity_list_schema,
     )
     from ckan.model import activity as model_activity
-    from ckan.lib.dictization.model_dictize import activity_list_dictize
+    from ckan.lib.dictization import model_dictize
+    def activity_list_dictize(actl, context):
+        return model_dictize.activity_list_dictize(
+            actl, context, include_data=True
+        )
 
 
 @validate(default_activity_list_schema)

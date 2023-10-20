@@ -7,12 +7,12 @@
     <i class="fa fa-circle fa-stack-2x icon"></i>
     <i class="fa fa-minus fa-stack-1x fa-inverse"></i>
   </span>
-  {% if 'filters' in activity.data %}
-    {% if 'total' in activity.data %}
+  {% if 'filters' in activity.data or 'count' in activity.data %}
+    {% if 'total' in activity.data or 'count' in activity.data %}
       {% set msg=ngettext(
         '{actor} deleted %(num)d record from the datastore resource {resource}',
         '{actor} deleted %(num)d records from the datastore resource {resource}',
-        activity.data.total) %}
+        activity.data.total or activity.data.count or 0) %}
     {% else %}
       {% set msg=_('{actor} deleted records from the datastore resource {resource}') %}
     {% endif %}

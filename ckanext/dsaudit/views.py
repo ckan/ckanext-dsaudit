@@ -66,7 +66,6 @@ def resource_activity(id, resource_id):
     except (tk.ObjectNotFound, tk.NotAuthorized):
         tk.abort(404, _(u'Resource not found'))
 
-
     return tk.render(
         "dsaudit/resource_activity.html",
         {
