@@ -23,7 +23,7 @@
       <div style="margin: 5px 0 0 80px;">
         <table class="table table-sm table-responsive">
           <thead>
-            {% for c in cols %}<td scope="col">{{ c }}</td>{% endfor %}
+            {% for c in cols %}<th scope="col">{{ c }}</th>{% endfor %}
           </thead>
           <tbody>
             {% for r in activity.data.records[:h.dsaudit_preview_records()] %}
