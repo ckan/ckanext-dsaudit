@@ -145,7 +145,10 @@ def datastore_upsert(original_action, context, data_dict):
         'include_total': False,
     })
     activity_data = {
-        'fields': srval['fields'],
+        'fields': [
+            f for f in srval['fields']
+            if any(f['id'] in r for r in rval['records'])
+        ],
         'records': rval['records'],
         'method': rval['method'],
     }
