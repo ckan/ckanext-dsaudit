@@ -26,7 +26,7 @@
   {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
 
   {% if activity.data.records %}
-    {% set cols = h.dsaudit_data_columns(activity.data.records) %}
+    {% set cols = h.dsaudit_data_columns(activity.data) %}
     <div style="margin: 5px 0 0 80px;">
       <table class="table table-sm table-responsive">
         <thead>
