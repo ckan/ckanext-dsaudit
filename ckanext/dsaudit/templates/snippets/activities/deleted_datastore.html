@@ -1,5 +1,5 @@
 {% macro resource(act) %}
-  <a href="{{ h.dsaudit_resource_url(act.object_id) }}">{{ act.object_id }}</a>
+  <a href="{{ h.dsaudit_resource_url(act.object_id, act.data.resource_id) }}">{{ act.data.resource_id }}</a>
 {% endmacro %}
 
 <li class="item {{ activity.activity_type|replace(' ', '-')|lower }}">

@@ -1,8 +1,7 @@
 from ckan import model
 from ckan.plugins.toolkit import h, config
 
-def dsaudit_resource_url(resource_id):
-    package_id = model.Resource.get(resource_id).package_id
+def dsaudit_resource_url(package_id, resource_id):
     pkg = model.Package.get(package_id)
     return h.url_for(
         pkg.type + '_resource.read',
