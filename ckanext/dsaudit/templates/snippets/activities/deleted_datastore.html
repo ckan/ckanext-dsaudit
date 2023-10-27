@@ -45,7 +45,7 @@
           </tbody>
         </table>
       </div>
-    {% else %}
+    {% elif activity.data.filters %}
       {% set cols = activity.data.filters.keys() %}
       <div style="margin: 5px 0 0 80px;">
         <table class="table">

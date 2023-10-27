@@ -9,21 +9,25 @@
       <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
     </span>
   {% endblock %}
+  {% set total =
+    activity.data.total if 'total' in activity.data else
+    activity.data.count if 'count' in activity.data else
+    activity.data.records|count %}
   {% if activity.data.method == 'insert' %}
     {% set msg=ngettext(
       '{actor} inserted %(num)d record into the datastore resource {resource}',
       '{actor} inserted %(num)d records into the datastore resource {resource}',
-      activity.data.records|count) %}
+      total) %}
   {% elif activity.data.method == 'update' %}
     {% set msg=ngettext(
       '{actor} updated %(num)d record in the datastore resource {resource}',
       '{actor} updated %(num)d records in the datastore resource {resource}',
-      activity.data.records|count) %}
+      total) %}
   {% else %}
     {% set msg=ngettext(
       '{actor} upserted %(num)d record into the datastore resource {resource}',
       '{actor} upserted %(num)d records into the datastore resource {resource}',
-      activity.data.records|count) %}
+      total) %}
   {% endif %}
   <p>
     {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
