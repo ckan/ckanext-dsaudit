@@ -1,8 +1,0 @@
-{% ckan_extends %}
-
-{% block resources_list_edit_dropdown_inner %}
-  {{ super() }}
-  {% if resource.url_type in h.datastore_rw_resource_url_types() %}
-    <li>{% link_for _('Activity'), named_route='dsaudit.resource_activity', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='clock' %}
-  {% endif %}
-{% endblock %}

@@ -1,9 +1,0 @@
-{% ckan_extends %}
-
-{% block inner_primary_nav %}
-  {{ super() }}
-  {% if res.url_type in h.datastore_rw_resource_url_types() %}
-    {{ h.build_nav_icon('dsaudit.resource_activity', _('Activity'),
-      id=pkg.name, resource_id=res.id, icon='clock') }}
-  {% endif %}
-{% endblock %}
