@@ -18,9 +18,9 @@
     {% else %}
       {% set msg=_('{actor} deleted records from the datastore resource {resource}') %}
     {% endif %}
-    <p>
+    {% block message %}
       {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
-    </p>
+    {% endblock %}
 
     {% if 'records' in activity.data %}
       {% set cols = h.dsaudit_data_columns(activity.data) %}

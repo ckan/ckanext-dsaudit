@@ -29,9 +29,9 @@
       '{actor} upserted %(num)d records into the datastore resource {resource}',
       total) %}
   {% endif %}
-  <p>
+  {% block message %}
     {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
-  </p>
+  {% endblock %}
 
   {% if activity.data.records %}
     {% set cols = h.dsaudit_data_columns(activity.data) %}
