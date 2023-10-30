@@ -3,6 +3,8 @@ from ckan.plugins.toolkit import h, config
 
 def dsaudit_resource_url(package_id, resource_id):
     pkg = model.Package.get(package_id)
+    if not pkg:
+        return '#'
     return h.url_for(
         pkg.type + '_resource.read',
         id=pkg.name,
