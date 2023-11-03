@@ -93,7 +93,7 @@ def datastore_upsert(original_action, context, data_dict):
             if any(f['id'] in r for r in rval['records'])
         ],
         'records': rval['records'],
-        'method': rval['method'],
+        'method': rval.get('method', 'upsert'),
         'resource_id': res.id,
     }
     get_action('activity_create')(acontext, {
