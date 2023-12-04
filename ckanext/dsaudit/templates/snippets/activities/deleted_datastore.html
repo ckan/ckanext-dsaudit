@@ -12,11 +12,11 @@
   {% if 'filters' in activity.data or 'count' in activity.data %}
     {% if 'total' in activity.data or 'count' in activity.data %}
       {% set msg=ngettext(
-        '{actor} deleted %(num)d record from the datastore resource {resource}',
-        '{actor} deleted %(num)d records from the datastore resource {resource}',
+        '{actor} deleted %(num)d record from datastore resource {resource}',
+        '{actor} deleted %(num)d records from datastore resource {resource}',
         activity.data.total or activity.data.count or 0) %}
     {% else %}
-      {% set msg=_('{actor} deleted records from the datastore resource {resource}') %}
+      {% set msg=_('{actor} deleted records from datastore resource {resource}') %}
     {% endif %}
     {% block message %}
       {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}
@@ -63,7 +63,7 @@
 
   {% else %}
     <p>
-      {{ _('{actor} deleted the datastore resource {resource}').format(
+      {{ _('{actor} deleted datastore resource {resource}').format(
         actor=ah.actor(activity),
         resource=resource(activity),
       )|safe }}

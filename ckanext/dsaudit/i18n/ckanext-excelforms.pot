@@ -4,18 +4,19 @@
 # project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-dsaudit 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-11-16 22:13+0000\n"
+"POT-Creation-Date: 2023-12-04 21:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.12.1\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ckanext/dsaudit/templates/dsaudit/resource_activity.html:3
 msgid "Activity Stream"
@@ -31,31 +32,31 @@ msgstr ""
 
 #: ckanext/dsaudit/templates/snippets/activities/changed_datastore.html:17
 #, python-format
-msgid "{actor} inserted %(num)d record into the datastore resource {resource}"
-msgid_plural "{actor} inserted %(num)d records into the datastore resource {resource}"
+msgid "{actor} inserted %(num)d record in datastore resource {resource}"
+msgid_plural "{actor} inserted %(num)d records in datastore resource {resource}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ckanext/dsaudit/templates/snippets/activities/changed_datastore.html:22
 #, python-format
-msgid "{actor} updated %(num)d record in the datastore resource {resource}"
-msgid_plural "{actor} updated %(num)d records in the datastore resource {resource}"
+msgid "{actor} updated %(num)d record in datastore resource {resource}"
+msgid_plural "{actor} updated %(num)d records in datastore resource {resource}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ckanext/dsaudit/templates/snippets/activities/changed_datastore.html:27
 #, python-format
-msgid "{actor} upserted %(num)d record into the datastore resource {resource}"
-msgid_plural "{actor} upserted %(num)d records into the datastore resource {resource}"
+msgid "{actor} upserted %(num)d record in datastore resource {resource}"
+msgid_plural "{actor} upserted %(num)d records in datastore resource {resource}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:13
-msgid "{actor} redefined the datastore table for resource {resource}"
+msgid "{actor} redefined datastore table for resource {resource}"
 msgstr ""
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:15
-msgid "{actor} defined the datastore table for resource {resource}"
+msgid "{actor} defined datastore table for resource {resource}"
 msgstr ""
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:26
@@ -76,16 +77,16 @@ msgstr ""
 
 #: ckanext/dsaudit/templates/snippets/activities/deleted_datastore.html:14
 #, python-format
-msgid "{actor} deleted %(num)d record from the datastore resource {resource}"
-msgid_plural "{actor} deleted %(num)d records from the datastore resource {resource}"
+msgid "{actor} deleted %(num)d record from datastore resource {resource}"
+msgid_plural "{actor} deleted %(num)d records from datastore resource {resource}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ckanext/dsaudit/templates/snippets/activities/deleted_datastore.html:19
-msgid "{actor} deleted records from the datastore resource {resource}"
+msgid "{actor} deleted records from datastore resource {resource}"
 msgstr ""
 
 #: ckanext/dsaudit/templates/snippets/activities/deleted_datastore.html:66
-msgid "{actor} deleted the datastore resource {resource}"
+msgid "{actor} deleted datastore resource {resource}"
 msgstr ""
 

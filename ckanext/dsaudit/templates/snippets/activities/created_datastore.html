@@ -10,9 +10,9 @@
     </span>
   {% endblock %}
   {% if activity.data.get('existing') %}
-    {% set msg=_('{actor} redefined the datastore table for resource {resource}') %}
+    {% set msg=_('{actor} redefined datastore table for resource {resource}') %}
   {% else %}
-    {% set msg=_('{actor} defined the datastore table for resource {resource}') %}
+    {% set msg=_('{actor} defined datastore table for resource {resource}') %}
   {% endif %}
   {% block message %}
     {{ msg.format(actor=ah.actor(activity), resource=resource(activity))|safe }}

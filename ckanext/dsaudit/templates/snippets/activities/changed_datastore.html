@@ -15,18 +15,18 @@
     activity.data.records|count %}
   {% if activity.data.method == 'insert' %}
     {% set msg=ngettext(
-      '{actor} inserted %(num)d record into the datastore resource {resource}',
-      '{actor} inserted %(num)d records into the datastore resource {resource}',
+      '{actor} inserted %(num)d record in datastore resource {resource}',
+      '{actor} inserted %(num)d records in datastore resource {resource}',
       total) %}
   {% elif activity.data.method == 'update' %}
     {% set msg=ngettext(
-      '{actor} updated %(num)d record in the datastore resource {resource}',
-      '{actor} updated %(num)d records in the datastore resource {resource}',
+      '{actor} updated %(num)d record in datastore resource {resource}',
+      '{actor} updated %(num)d records in datastore resource {resource}',
       total) %}
   {% else %}
     {% set msg=ngettext(
-      '{actor} upserted %(num)d record into the datastore resource {resource}',
-      '{actor} upserted %(num)d records into the datastore resource {resource}',
+      '{actor} upserted %(num)d record in datastore resource {resource}',
+      '{actor} upserted %(num)d records in datastore resource {resource}',
       total) %}
   {% endif %}
   {% block message %}
