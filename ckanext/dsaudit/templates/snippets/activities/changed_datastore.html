@@ -25,8 +25,8 @@
       total) %}
   {% else %}
     {% set msg=ngettext(
-      '{actor} upserted %(num)d record in datastore resource {resource}',
-      '{actor} upserted %(num)d records in datastore resource {resource}',
+      '{actor} inserted (for new records) or updated (for existing records) %(num)d record in datastore resource {resource}',
+      '{actor} inserted (for new records) or updated (for existing records) %(num)d records in datastore resource {resource}',
       total) %}
   {% endif %}
   {% block message %}

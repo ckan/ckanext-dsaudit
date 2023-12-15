@@ -35,58 +35,58 @@ msgstr ""
 #, python-format
 msgid "{actor} inserted %(num)d record in datastore resource {resource}"
 msgid_plural "{actor} inserted %(num)d records in datastore resource {resource}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{actor} a inséré %(num)d enregistrement dans la ressource de magasin de données {resource}"
+msgstr[1] "{actor} a inséré %(num)d enregistrements dans la ressource de magasin de données {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/changed_datastore.html:22
 #, python-format
 msgid "{actor} updated %(num)d record in datastore resource {resource}"
 msgid_plural "{actor} updated %(num)d records in datastore resource {resource}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{actor} mis à jour %(num)d dans la ressource magasin de données {resource}"
+msgstr[1] "{actor} mis à jour %(num)d enregistrements dans la ressource magasin de données {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/changed_datastore.html:27
 #, python-format
-msgid "{actor} upserted %(num)d record in datastore resource {resource}"
-msgid_plural "{actor} upserted %(num)d records in datastore resource {resource}"
-msgstr[0] ""
-msgstr[1] ""
+msgid "{actor} inserted (for new records) or updated (for existing records) %(num)d record in datastore resource {resource}"
+msgid_plural "{actor} inserted (for new records) or updated (for existing records) %(num)d records in datastore resource {resource}"
+msgstr[0] "{actor} inséré (pour les nouveaux enregistrements) ou mis à jour (pour les enregistrements existants) %(num)d enregistrement dans la ressource magasin de données {resource}"
+msgstr[1] "{actor} inséré (pour les nouveaux enregistrements) ou mis à jour (pour les enregistrements existants) %(num)d enregistrements dans la ressource magasin de données {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:13
 msgid "{actor} redefined datastore table for resource {resource}"
-msgstr ""
+msgstr "{actor} redéfini le tableau magasin de données pour la ressource {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:15
 msgid "{actor} defined datastore table for resource {resource}"
-msgstr ""
+msgstr "{actor} défini le tableau magasin de données pour la ressource {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:26
 msgid "Column"
-msgstr ""
+msgstr "Colonne"
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:27
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:28
 msgid "Label"
-msgstr ""
+msgstr "Étiquette"
 
 #: ckanext/dsaudit/templates/snippets/activities/created_datastore.html:29
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: ckanext/dsaudit/templates/snippets/activities/deleted_datastore.html:14
 #, python-format
 msgid "{actor} deleted %(num)d record from datastore resource {resource}"
 msgid_plural "{actor} deleted %(num)d records from datastore resource {resource}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{actor} a supprimé %(num)d l’enregistrement de la ressource magasin de données {resource}"
+msgstr[1] "{actor} a supprimé %(num)d enregistrements de la ressource magasin de données {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/deleted_datastore.html:19
 msgid "{actor} deleted records from datastore resource {resource}"
-msgstr ""
+msgstr "{actor} a supprimé des enregistrements de la ressource magasin de données {resource}"
 
 #: ckanext/dsaudit/templates/snippets/activities/deleted_datastore.html:66
 msgid "{actor} deleted datastore resource {resource}"
-msgstr ""
+msgstr "{actor} a supprimé la ressource magasin de données {resource}"
