@@ -25,11 +25,19 @@ except ImportError:
     )
 
 
+def _is_system_user(context):
+    site_user = get_action("get_site_user")({"ignore_auth": True}, {})
+    if site_user["name"] == context.get('user') or not context.get('user'):
+        return True
+    return False
+
+
 @chained_action
 def datastore_create(original_action, context, data_dict):
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
-    if res.url_type not in h.datastore_rw_resource_url_types():
+    # we want to record activity for `upload` type Data Dcitionary saving
+    if (res.url_type != 'upload' and res.url_type not in h.datastore_rw_resource_url_types()) or _is_system_user(context):
         return res
 
     acontext = dict(
@@ -67,7 +75,7 @@ def datastore_create(original_action, context, data_dict):
 def datastore_upsert(original_action, context, data_dict):
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
-    if res.url_type not in h.datastore_rw_resource_url_types():
+    if res.url_type not in h.datastore_rw_resource_url_types() or _is_system_user(context):
         return res
 
     acontext = dict(
@@ -108,7 +116,7 @@ def datastore_upsert(original_action, context, data_dict):
 @chained_action
 def datastore_delete(original_action, context, data_dict):
     res = context['model'].Resource.get(data_dict.get('resource_id'))
-    if not res or res.url_type not in h.datastore_rw_resource_url_types():
+    if not res or res.url_type not in h.datastore_rw_resource_url_types() or _is_system_user(context):
         return original_action(context, data_dict)
 
     activity_data = {}
