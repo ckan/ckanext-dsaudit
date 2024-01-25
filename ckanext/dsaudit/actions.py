@@ -26,6 +26,15 @@ except ImportError:
 
 
 def _is_system_user(context):
+    """
+    Checks if the current contextual user is the system/site user,
+    or if there is no current user: Anonymous or other plugins that
+    pass a blank or None user in the context like Xloader.
+
+    Generally, Anonymous users will not have permissions to Datastore
+    actions. However, pluginx like Xloader may pass ignore_auth with
+    an empty user in the context.
+    """
     site_user = get_action("get_site_user")({"ignore_auth": True}, {})
     if site_user["name"] == context.get('user') or not context.get('user'):
         return True
