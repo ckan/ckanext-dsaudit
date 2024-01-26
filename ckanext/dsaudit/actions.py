@@ -25,11 +25,28 @@ except ImportError:
     )
 
 
+def _is_system_user(context):
+    """
+    Checks if the current contextual user is the system/site user,
+    or if there is no current user: Anonymous or other plugins that
+    pass a blank or None user in the context like Xloader.
+
+    Generally, Anonymous users will not have permissions to Datastore
+    actions. However, pluginx like Xloader may pass ignore_auth with
+    an empty user in the context.
+    """
+    site_user = get_action("get_site_user")({"ignore_auth": True}, {})
+    if site_user["name"] == context.get('user') or not context.get('user'):
+        return True
+    return False
+
+
 @chained_action
 def datastore_create(original_action, context, data_dict):
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
-    if res.url_type not in h.datastore_rw_resource_url_types():
+    # we want to record activity for `upload` type Data Dcitionary saving
+    if res.url_type not in h.datastore_rw_resource_url_types() and _is_system_user(context):
         return res
 
     acontext = dict(
