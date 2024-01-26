@@ -84,7 +84,7 @@ def datastore_create(original_action, context, data_dict):
 def datastore_upsert(original_action, context, data_dict):
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
-    if res.url_type not in h.datastore_rw_resource_url_types() or _is_system_user(context):
+    if res.url_type not in h.datastore_rw_resource_url_types():
         return res
 
     acontext = dict(
@@ -125,7 +125,7 @@ def datastore_upsert(original_action, context, data_dict):
 @chained_action
 def datastore_delete(original_action, context, data_dict):
     res = context['model'].Resource.get(data_dict.get('resource_id'))
-    if not res or res.url_type not in h.datastore_rw_resource_url_types() or _is_system_user(context):
+    if not res or res.url_type not in h.datastore_rw_resource_url_types():
         return original_action(context, data_dict)
 
     activity_data = {}
