@@ -122,7 +122,8 @@ def datastore_upsert(original_action, context, data_dict):
     return rval
 
 
-def _datastore_delete(original_action, context, data_dict):
+@chained_action
+def datastore_delete(original_action, context, data_dict):
     res = context['model'].Resource.get(data_dict.get('resource_id'))
     if not res or res.url_type not in h.datastore_rw_resource_url_types():
         return original_action(context, data_dict)
@@ -161,16 +162,6 @@ def _datastore_delete(original_action, context, data_dict):
         'data': activity_data,
     })
     return rval
-
-
-@chained_action
-def datastore_delete(original_action, context, data_dict):
-    return _datastore_delete(original_action, context, data_dict)
-
-
-@chained_action
-def datastore_records_delete(original_action, context, data_dict):
-    return _datastore_delete(original_action, context, data_dict)
 
 
 def dsaudit_create_activity_schema():

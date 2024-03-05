@@ -23,7 +23,6 @@ class DSAuditPlugin(p.SingletonPlugin, DefaultTranslation):
             'datastore_create': actions.datastore_create,
             'datastore_upsert': actions.datastore_upsert,
             'datastore_delete': actions.datastore_delete,
-            'datastore_records_delete': actions.datastore_records_delete,
         }
 
     def get_helpers(self):
