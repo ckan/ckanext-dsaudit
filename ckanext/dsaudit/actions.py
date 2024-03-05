@@ -151,7 +151,9 @@ def datastore_delete(original_action, context, data_dict):
         ignore_auth=True,
         schema=dsaudit_create_activity_schema(),
     )
-    activity_data['filters'] = rval['filters']
+    # datastore_delete schema does not require filters,
+    # only datastore_records_delete does.
+    activity_data['filters'] = rval.get('filters')
     activity_data['resource_id'] = res.id
     get_action('activity_create')(acontext, {
         'user_id': context['model'].User.get(context['user']).id,
