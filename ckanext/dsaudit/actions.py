@@ -32,16 +32,22 @@ def datastore_create(original_action, context, data_dict):
     if res.url_type not in h.datastore_rw_resource_url_types():
         return res
 
+    create_data = {
+        k: v for k, v in rval.items() if k not in ['records', 'method']
+    }
+    create_data['existing'] = res.extras.get('datastore_active', False)
+
+    create_data['url_type'] = res.url_type
+    create_data['fields'] = get_action('datastore_info')(
+        dict(fresh_context(context), ignore_auth=True),
+        {'id': res.id}
+    )['fields']
+
     acontext = dict(
         fresh_context(context),
         ignore_auth=True,
         schema=dsaudit_create_activity_schema(),
     )
-
-    create_data = {
-        k: v for k, v in rval.items() if k not in ['records', 'method']
-    }
-    create_data['existing'] = res.extras.get('datastore_active', False)
     get_action('activity_create')(acontext, {
         'user_id': context['model'].User.get(context['user']).id,
         'object_id': res.package_id,
