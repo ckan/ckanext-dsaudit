@@ -30,7 +30,7 @@
   {% endif %}
 
   {% snippet 'datastore/snippets/dictionary_view.html',
-    res=res, ddict=activity.data.fields %}
+    res=res, ddict=activity.data.fields, prefix=activity.id %}
   <p>
     <span class="date" title="{{ h.render_datetime(activity.timestamp, with_hours=True) }}">
       {{ h.time_ago_from_timestamp(activity.timestamp) }}
