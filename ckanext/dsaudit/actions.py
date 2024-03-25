@@ -47,7 +47,7 @@ def datastore_create(original_action, context, data_dict):
     res = context['model'].Resource.get(rval['resource_id'])
     # we want to record activity for `upload` type Data Dcitionary saving
     if res.url_type not in h.datastore_rw_resource_url_types() and _is_system_user(context):
-        return res
+        return rval
 
     create_data = {
         k: v for k, v in rval.items() if k not in ['records', 'method']
@@ -91,7 +91,7 @@ def datastore_upsert(original_action, context, data_dict):
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
     if res.url_type not in h.datastore_rw_resource_url_types():
-        return res
+        return rval
 
     acontext = dict(
         fresh_context(context),
