@@ -106,7 +106,7 @@ def datastore_upsert(original_action, context, data_dict):
         ignore_auth=True,
     )
     srval = get_action('datastore_search')(scontext, {
-        'resource_id': data_dict['resource_id'],
+        'resource_id': res.id,
         'limit': 0,
         'include_total': False,
     })
