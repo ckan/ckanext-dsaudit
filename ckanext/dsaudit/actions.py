@@ -43,6 +43,8 @@ def _is_system_user(context):
 
 @chained_action
 def datastore_create(original_action, context, data_dict):
+    records = data_dict.get('records', [])
+
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
     # we want to record activity for `upload` type Data Dcitionary saving
@@ -72,10 +74,13 @@ def datastore_create(original_action, context, data_dict):
         'data': create_data,
     })
 
-    if rval.get('records'):
+    if 'records' in rval:
+        records = rval['records']
+    if records:
         change_data = {
-            k:v for k, v in rval.items() if k in [
-                'resource_id', 'records', 'method']
+            'resource_id': rval['resource_id'],
+            'method': rval['method'],
+            'records': records,
         }
         get_action('activity_create')(acontext, {
             'user_id': context['model'].User.get(context['user']).id,
@@ -88,6 +93,8 @@ def datastore_create(original_action, context, data_dict):
 
 @chained_action
 def datastore_upsert(original_action, context, data_dict):
+    records = data_dict.get('records', [])
+
     rval = original_action(context, data_dict)
     res = context['model'].Resource.get(rval['resource_id'])
     if res.url_type not in h.datastore_rw_resource_url_types():
@@ -110,12 +117,14 @@ def datastore_upsert(original_action, context, data_dict):
         'limit': 0,
         'include_total': False,
     })
+    if 'records' in rval:
+        records = rval['records']
     activity_data = {
         'fields': [
             f for f in srval['fields']
-            if any(f['id'] in r for r in rval['records'])
+            if any(f['id'] in r for r in records)
         ],
-        'records': rval['records'],
+        'records': records,
         'method': rval.get('method', 'upsert'),
         'resource_id': res.id,
     }
